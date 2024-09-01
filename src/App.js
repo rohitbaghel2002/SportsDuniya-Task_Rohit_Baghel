@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import collegesData from "./collegesData"; // Import dummy data
 import "./App.css"; // Import the updated CSS
 
@@ -9,47 +9,41 @@ const App = () => {
   const [sortKey, setSortKey] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false); // To handle loading state
 
   useEffect(() => {
     setColleges(collegesData);
     setDisplayedColleges(collegesData.slice(0, 10));
   }, []);
 
-  const loadMoreData = useCallback(() => {
-    if (loading) return;
-    setLoading(true); // Set loading state to true
-
-    const currentLength = displayedColleges.length;
-    const filteredData = filteredColleges();
-    
-    // Simulate a delay for loading more data
-    setTimeout(() => {
-      if (currentLength >= filteredData.length) {
-        setHasMore(false);
-        setLoading(false); // End loading state
-        return;
-      }
-
-      const moreData = filteredData.slice(currentLength, currentLength + 10);
-      setDisplayedColleges((prev) => [...prev, ...moreData]);
-      setLoading(false); // End loading state
-    }, 1000); // Simulate network delay
-  }, [displayedColleges, filteredColleges, loading]);
-
   useEffect(() => {
     const handleScroll = () => {
-      if (loading || !hasMore) return;
-
-      const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-      if (scrollTop + clientHeight >= scrollHeight - 5) {
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 1
+      ) {
         loadMoreData();
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [loadMoreData, hasMore, loading]); // Include loadMoreData in the dependency array
+  }, [displayedColleges]);
+
+  const loadMoreData = () => {
+    const currentLength = displayedColleges.length;
+    const filtered = filteredColleges();
+
+    if (currentLength >= filtered.length) {
+      setHasMore(false);
+      return;
+    }
+
+    const moreData = filtered.slice(
+      currentLength,
+      currentLength + 10
+    );
+    setDisplayedColleges((prev) => [...prev, ...moreData]);
+  };
 
   const sortColleges = (colleges) => {
     if (!sortKey) return colleges;
@@ -90,7 +84,6 @@ const App = () => {
       setSortOrder("asc");
     }
     setDisplayedColleges(filteredColleges().slice(0, 10));
-    setHasMore(true); // Reset pagination
   };
 
   return (
@@ -146,7 +139,6 @@ const App = () => {
         </tbody>
       </table>
       {!hasMore && <p>No more colleges to show.</p>}
-      {loading && <p>Loading more items...</p>}
     </div>
   );
 };
