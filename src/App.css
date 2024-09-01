@@ -1,0 +1,84 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f2f5;
+}
+
+.container {
+  width: 90%;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.college-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.college-table th, .college-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.college-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.college-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.college-table tr:hover {
+  background-color: #ddd;
+}
+
+.college-details {
+  text-align: left;
+}
+
+.college-details h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.college-details p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.college-actions a {
+  color: #007bff;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.college-actions a:hover {
+  text-decoration: underline;
+}
+
+.featured-badge {
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  padding: 3px 5px;
+  border-radius: 4px;
+  margin-top: 10px;
+  display: inline-block;
+}
